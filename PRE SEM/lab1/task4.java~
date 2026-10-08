@@ -1,0 +1,21 @@
+//task4
+import java.util.Scanner;
+public class task4{
+  public static void main (String [] args){
+
+    Scanner sc = new Scanner (System.in);
+    System.out.println("row= ");
+    int row = sc.nextInt();
+    System.out.println("column= ");
+    int col = sc.nextInt();
+    while (row>0){
+      while(col>0){
+        System.out.print(sc.nextInt() +" ");
+        col-=1;
+      }
+      System.out.println();
+      row-=1;
+    }
+  
+  }
+}

@@ -1,0 +1,362 @@
+// ans to the ques no 1
+
+public class Product {
+
+    public static String[] pName = new String[3];
+    public static int[] pQau = new int[3];
+    public static int count;
+
+    public Product(String product , int qua){
+        if(count<pName.length){
+            pName[count]= product;
+            pQau [count++] = qua;
+            System.out.println("Stored: " + product);
+        }
+        else{
+            System.out.println("Storage is full! Cannot add " + product);
+        }
+    }
+    public static void displayProducts(){
+        System.out.println("=== Stored Products ===");
+        for (int i = 0; i < pName.length; i++) {
+            System.out.println(pName[i] + ": - Qty: " + pQau[i]);
+        }
+    }
+    public static void buy(String pro , int amo){
+        boolean flag = false;
+        int temp=0;
+        for (int i = 0; i < pName.length; i++) {
+            if(pName[i].equals(pro)){
+                flag = true;
+                temp=i;
+            }
+        }
+        if(flag){
+            if(amo<pQau[temp]){
+                pQau[temp] = pQau[temp] - amo;
+                System.out.println("Product Sold");
+            }
+            else {
+                System.out.println("Quantity low");
+            }
+        }
+        else {
+            System.out.println("Product not found");
+        }
+    }
+}
+
+
+//ans to the ques no 2
+
+public class Character {
+
+    public static int kid;
+    public static int teen;
+    public static int adult;
+    public static int total;
+    public static String strong = "None";
+    public static int stronghel;
+    public static int sum;
+    public int health;
+    public int id;
+    public String name;
+    public String group;
+
+
+    public Character(String name , String grp , int health){
+        id = ++total;
+        this.name = name;
+        this.group= grp;
+        if(grp.equals("Kid")){
+            kid++;
+        }
+        else if(grp.equals("Teen")){
+            teen++;
+        }
+        else if(grp.equals("Adult")){
+            adult++;
+        }
+        this.health = health;
+        sum += health;
+        if (stronghel<health){
+            strong = name + " (Health " + health + ")";
+            stronghel = health;
+        }
+    }
+
+    public Character(String name , int health){
+        id = ++total;
+        this.name = name;
+        this.group= "Teen";
+        teen++;
+        this.health = health;
+        sum += health;
+        if (stronghel<health){
+            strong = name + " (Health " + health + ")";
+            stronghel = health;
+        }
+    }
+
+    public void printDetails(){
+        System.out.println("ID: " + id + ", Name: " + name);
+        System.out.println("Group: " + group);
+        System.out.println("Health: " + health );
+    }
+
+    private static double avg(){
+        if(sum==0){
+            return 0;
+        }
+        else {
+            return (double) sum / total;
+        }
+    }
+
+    public static void printStats(){
+        System.out.println("Total characters: " + total);
+        System.out.println("Kids: " + kid);
+        System.out.println("Teens: " + teen);
+        System.out.println("Adults: " + adult);
+        System.out.println("Average Health: " + avg());
+        System.out.println("Strongest Character: " + strong);
+    }
+}
+
+
+// ans to the ques no 3
+
+public class Artifact {
+    private static Artifact[] vault = new Artifact[4];
+    private int power;
+    private static int count;
+    private String name = "Okabe";
+    private String product;
+
+    public Artifact(String pro , String keep){
+        this.product= pro;
+        this.name= keep;
+        getpower();
+    }
+
+    public Artifact(String pro){
+        this.product= pro;
+        getpower();
+    }
+
+    public void changeName(String product){
+        this.product = product;
+        power=0;
+        getpower();
+        System.out.println("Name changed and power recalculated.");
+    }
+
+    public String GetName(){
+        return this.product;
+    }
+
+    public void setKeep(String keep){
+        this.name = keep;
+    }
+
+    public String getKeep(){
+        return this.name;
+    }
+
+    public static void AddtoVault(Artifact temp){
+        if(count<4){
+            vault[count++] = temp;
+            System.out.println(temp.getKeep() +  " added "+ temp.GetName()+" successfully to the vault.");
+        }
+        else {
+            System.out.println("!!"+ temp.getKeep() + " unsuccessful in adding "+ temp.GetName()+" to the vault!!");
+        }
+    }
+
+    public void getpower(){
+        if(product.length()%2==0){
+            for (int i = 0; i < product.length(); i=i+2) {
+                power = power + (int) product.charAt(i);
+            }
+        }
+        else{
+            for (int i = 1; i < product.length(); i= i+2) {
+                power = power + (int) product.charAt(i);
+            }
+        }
+    }
+
+    public int CalcPower(){
+        return power;
+    }
+
+    public static void labReport(){
+        System.out.println("=== Future Gadget Lab ===");
+        for (int i = 0; i < count; i++) {
+            System.out.println(vault[i].GetName() + " added by "+ vault[i].getKeep() + " has power of " + vault[i].CalcPower() );
+        }
+    }
+
+    public static String strongest(){
+        int temp= vault[0].CalcPower();
+        int flag=0;
+        for (int i = 1; i < count ; i++) {
+            if(temp<vault[i].CalcPower()){
+                temp=vault[i].CalcPower();
+                flag =i;
+            }
+        }
+        return vault[flag].product;
+    }
+
+    public void revealArtifact(){
+        System.out.println(product + " added by " + name + " has power of " + CalcPower());
+    }
+}
+
+
+// ans to the ques no 4
+
+public class Animalkeepers {
+    public static String[] Animals=new String[]{"Lion" , "Tiger" , "Seal" , "Gorilla", "Deer"};
+    public static String[] doTask = new String[Animals.length];
+    public static int count;
+    public static int idCount= 100;
+    private int id;
+    public String name;
+
+    public Animalkeepers(String name){
+        this.name= name;
+        id = ++idCount;
+        System.out.println(this.name+ " with ID "+ getId()+ " got the job!");
+    }
+
+    public int getId(){
+        return id;
+    }
+    public void setId(int id){
+        this.id = id;
+    }
+    public void doTask(String ani , String job){
+        boolean flag = false;
+        for (int i = 0; i < Animals.length; i++) {
+            if(Animals[i].equals(ani)){
+                flag = true;
+                if(doTask[i]== null){
+                    count++;
+                }
+                doTask[i] = job + "(Keeper - " + this.name+ ") === "+ ani;
+                System.out.println("Task assigned to "+ this.name);
+            }
+        }
+        if(!flag){
+            System.out.println("Animal not in the Safari");
+        }
+    }
+
+    public static void printTasks(){
+        if(count>0){
+            for (int i = 0; i < Animals.length; i++) {
+                if(!(doTask[i]==null)){
+                    System.out.println(doTask[i]);
+                }
+            }
+        }
+        else {
+            System.out.println("No tasks assigned.");
+        }
+    }
+
+    public static void details(){
+        if(count>0) {
+            System.out.println("Total Animal Keeper: " + (idCount % 100));
+            System.out.println("Total Task assigned: " + count);
+            printTasks();
+        }
+        else {
+            System.out.println("No Animal Keepers working yet.");
+        }
+    }
+}
+
+
+//ans to the ques no 5
+
+//event class
+
+public class Event {
+    public static Event[] eve = new Event[5];
+    private String name;
+    public String date;
+    public static int totalevent;
+
+    public Event(String name , String  date){
+        eve[totalevent++] = this;
+        this.name= name;
+        this.date= date;
+    }
+
+    public void setName(){
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public static void allEventInfo(){
+        System.out.println("Total Events: "+ totalevent);
+        System.out.println("Event Details: ");
+        for (int i = 0; i < totalevent; i++) {
+            System.out.println("Event " + (i+1)+":");
+            System.out.println("Name: "+ eve[i].name);
+            System.out.println("Date: "+ eve[i].date);
+
+        }
+    }
+
+    public String details(){
+       return "Name: "+ this.name+"\nDate: "+ this.date;
+    }
+}
+
+
+//organizer class
+
+package home5;
+
+public class Organizer {
+    public String name;
+    public Event[] org = new Event[4];
+    public int count;
+
+    public Organizer(){
+        System.out.println("Please provide the organizer's name");
+    }
+
+    public Organizer(String name){
+        this.name= name;
+    }
+
+    public void organizeEvent(Event ev){
+       if (count<4) {
+           org[count++] = ev;
+           System.out.println(this.name + " successfully organized " + ev.getName());
+       }
+    }
+
+    public void searchEventByDate(String date){
+        boolean flag = false;
+        for (int i = 0; i < count; i++) {
+            if(org[i].date.equals(date)){
+                flag= true;
+                System.out.println(org[i].getName());
+            }
+        }
+        if(!flag){
+            System.out.println("No event is scheduled for "+ date);
+        }
+    }
+}
+
+
+

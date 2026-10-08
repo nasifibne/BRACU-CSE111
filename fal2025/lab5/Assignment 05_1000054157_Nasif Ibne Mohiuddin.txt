@@ -1,0 +1,318 @@
+//ans to the ques no 1
+//company class
+
+public class Company {
+    public Employee[] emp = new Employee[3];
+    public int cap = 3;
+    public int total;
+    public String com = "ABC Company";
+
+    public void details() {
+        System.out.println("Company Name: " + com);
+        System.out.println("Total Employee: " + total);
+        System.out.println("Fulltime Employees: ");
+        for (int i = 0; i < total; i++) {
+            if (emp[i].time.equals("Fulltime")) {
+                System.out.println("Name: " + emp[i].name + ", ID: " + emp[i].id);
+            }
+        }
+        System.out.println("Part-Time Employees: ");
+        for (int i = 0; i < total; i++) {
+            if (emp[i].time.equals("Part-time")) {
+                System.out.println("Name: " + emp[i].name + ", ID: " + emp[i].id);
+            }
+        }
+    }
+
+    public void addEmployee(Employee emp) {
+        if (total < cap) {
+            this.emp[total++] = emp;
+            System.out.println(emp.name + " has joined the company");
+        } else {
+            System.out.println("No more vacancy");
+        }
+    }
+
+    public void removeEmployee(Employee chk) {
+        boolean flag = false;
+        int temp = 0;
+        for (int i = 0; i < total; i++) {
+            if (emp[i] == chk) {
+                flag = true;
+                temp = i;
+            }
+        }
+        if (flag) {
+            emp[temp] = null;
+            for (int i = temp; i < total-1; i++) {
+                this.emp[i]  = this.emp[i+1];
+            }
+            total--;
+            System.out.printf("%s has left the company\n",chk.name);
+        }
+    }
+}
+
+//employee class
+
+public class Employee {
+        public String name;
+        public String time;
+        public int id;
+
+        public Employee() {
+            System.out.println("A default employee has been created");
+        }
+
+        public Employee(String name, int id, String time) {
+            this.name = name;
+            this.id = id;
+            this.time = time;
+        }
+    }
+
+
+
+//ans to the ques no 2
+//department class
+
+public class Department {
+    public String name;
+    public Student[] std = new Student[5];
+    public int count;
+
+    public Department(String name){
+        this.name = name;
+    }
+    
+    public void findStudent(int a ){
+        boolean flag = false;
+        int temp = 0;
+        for (int i =0 ; i<count ;i ++){
+            if(a == std[i].id){
+                flag = true;
+                temp = i;
+            }
+        }
+        if(flag){
+            System.out.println("Student info:");
+            System.out.printf("Student name: %s\nID: %d\nCGPA: %.2f\n",std[temp].name,std[temp].id,std[temp].cg);
+        }
+        else {
+            System.out.println("Student with this ID doesn't exist, Please give a valid ID");
+        }
+    }
+    
+    public void addStudent(Student s1){
+        boolean flag = false;
+        for (int i = 0; i < count; i++) {
+            if(s1.id== std[i].id){
+                flag = true;
+            }
+        }
+        if(!flag){
+            if (count < 5) {
+                std[count++] = s1;
+                System.out.printf("Welcome to CSE department, %s\n", s1.name);
+            } else {
+                System.out.println("cant add more then 5 students");
+            }
+        }
+        else {
+            System.out.println("Student with the same ID already exists, Please try with another ID");
+        }
+    }
+    
+    public void addStudent(Student s1,Student s2, Student s3){
+        addStudent(s1);
+        addStudent(s2);
+        addStudent(s3);
+    }
+    
+    public void details(){
+        System.out.println("Department name: "+ this.name);
+        System.out.printf("Number of students: %d\n",this.count);
+        System.out.println("Details of the students: ");
+        for (int i = 0; i < count; i++) {
+            System.out.printf("Student name: %s, ID: %d, cgpa: %.2f\n",std[i].name, std[i].id, std[i].cg);
+        }
+
+    }
+    
+}
+
+//student class
+
+public class Student {
+    public String name;
+    public int id;
+    public double cg;
+
+    public Student(String name , int id , double cg){
+        this.name = name;
+        this.id= id;
+        this.cg = cg;
+    }
+    public void updateId(int id){
+        this.id = id;
+    }
+
+}
+
+//ans to the ques no 3
+//restaurant class
+
+public class Restaurant {
+    public String res;
+    public String loc;
+    public UberEatsUser[] order = new UberEatsUser[3];
+    public int count;
+
+    public Restaurant(String res , String loc){
+        this.res = res;
+        this.loc = loc;
+    }
+    
+    public void takeOrder(UberEatsUser user){
+        boolean flag = false;
+        for(int i = 0 ; i<count ; i++){
+            if(user == order[i]){
+                flag = true;
+            }
+        }
+        if(flag){
+            System.out.printf("You already have a pending order!\n");
+        }
+        else {
+            if(count<3 ){
+                if(!(user.loc.equals("unknown"))){
+                    order[count++] = user;
+                    System.out.printf("Your order has been added!\n");
+                }
+                else {
+                    System.out.printf("Location : Unknown. Please update your location information!\n");
+                }
+            }
+            else{
+                System.out.printf("We are really busy right now. Please order after some time. Thank you!\n");
+            }
+        }
+
+    }
+    
+    public void completeOrders(){
+        if(count>0){
+            System.out.printf("Showing %s's orders:\n",this.res);
+            for (int i = 0 ; i<count ; i++){
+                System.out.printf("Order by %s at %s completed\n",order[i].name, order[i].loc);
+            }
+            for (int i = 0 ; i<count ; i++){
+                order[i] = null;
+            }
+            count=0;
+        }
+        else {
+            System.out.println("No pending orders at the moment.");
+        }
+    }
+    
+}
+
+//uberEatsUser class
+
+public class UberEatsUser {
+    public String name;
+    public String loc= "unknown";
+
+    public UberEatsUser(String name, String loc){
+        this.name = name;
+        this.loc = loc;
+    }
+    
+    public UberEatsUser(String  name){
+        this.name= name;
+    }
+    
+    public void updateLocation(String loc){
+        if( this.loc.equals("unknown")){
+            this.loc = loc;
+            System.out.printf("Update Successful!\n");
+        }
+        else {
+            System.out.println("We already have your location. Please place an order!");
+        }
+    }
+    
+}
+
+
+//ans to the ques no 4
+
+public class ConnectFriends {
+    public String name;
+    public int cap=2;
+    public int total;
+    public ConnectFriends[] friends;
+
+    public ConnectFriends(String name , int cap){
+        this.name= name;
+        this.cap = cap;
+        friends= new ConnectFriends[cap];
+        System.out.printf("Welcome to ConnectFriends, %s\n",this.name);
+    }
+    
+    public ConnectFriends(String name){
+        this.name = name;
+        friends = new ConnectFriends[cap];
+        System.out.printf("Welcome to ConnectFriends, %s\n",this.name);
+    }
+    
+    public void sendFriendRequest(ConnectFriends temp){
+        if(total<cap){
+            friends[total++] = temp;
+            System.out.printf("%s sent a friend request to %s.\n",this.name, temp.name);
+        }
+        else {
+            System.out.printf("%s has reached the friend request limit!\n",this.name);
+        }
+    }
+    
+    public void sendFriendRequest(ConnectFriends temp1, ConnectFriends temp2){
+        sendFriendRequest(temp1);
+        sendFriendRequest(temp2);
+    }
+    
+    public void showDetails(){
+        System.out.printf("User Name: %s\nMaximum number of Sent Friend Request: %d\nTotal Friends Request: %d\nSent Friends Request:",this.name,this.cap ,this.total);
+        for(int i = 0 ; i<total ; i++){
+            System.out.printf(friends[i].name + " ");
+        }
+        System.out.println();
+    }
+    
+    public void removeRequest(String temp){
+        boolean flag = false;
+        int frnd=0;
+        for(int i =0 ; i<total ; i++){
+            if(temp.equals(friends[i].name)){
+                flag = true;
+                frnd=i;
+            }
+        }
+        if(flag){
+            friends[frnd]= null;
+            for(int i = frnd ; i<total-1 ; i++){
+                friends[i] = friends[i+1];
+            }
+            total--;
+            System.out.printf("Reuqest to add %s is removed for %s.\n",temp , this.name);
+        }
+        else {
+            System.out.printf("%s is not in %s's sent request list.\n",temp, this.name);
+        }
+    }
+    
+}
+
+
+

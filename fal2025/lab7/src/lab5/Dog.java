@@ -1,0 +1,18 @@
+package lab5;
+
+public class Dog extends Animal{
+    public String breed;
+
+    public Dog(String name, int age, String color, String breed){
+        super(name,age,color);
+        this.breed = breed;
+    }
+
+    public String dogInfo(){
+        return super.info() +"Breed: "+ this.breed;
+    }
+
+    public void makeSound(){
+        System.out.println(this.color + " color "+ this.name+ " is barking");
+    }
+}

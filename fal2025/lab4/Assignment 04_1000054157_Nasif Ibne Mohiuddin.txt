@@ -1,0 +1,261 @@
+//ans to the ques no 1
+
+public class Player {
+    public String player;
+    public String[] defeat= new String[5];
+    public int hp;
+    public int count;
+
+    public Player(String player , int hp){
+        this.player = player;
+        this.hp=hp;
+        System.out.printf("%s joined the game\n",player);
+        System.out.printf("HP: %d\n",hp);
+    }
+    public Player(String player){
+        this.player = player;
+        this.hp=100;
+        System.out.printf("%s joined the game\n",player);
+        System.out.printf("HP: %d\n",hp);
+    }
+    public void viewInfo(){
+        System.out.printf("Player Name: %s\n", this.player);
+        System.out.printf("Current HP: %d\n", this.hp);
+        if(count>0) {
+            System.out.printf("Defeated:\n");
+            for (int i = 0; i < count; i++) {
+                System.out.printf(this.defeat[i] + ", ");
+            }
+            System.out.println();
+        }
+    }
+    public void defeatVillain(String player, int hp){
+        if(count<5) {
+            if (hp > this.hp) {
+                System.out.printf("failed to defeat %s\n", player);
+            } else {
+                System.out.printf("defeated %s\n", player);
+                this.hp += hp;
+                this.defeat[count++] = player;
+            }
+        }
+        else{
+            System.out.printf("maximum villains are defeated\n");
+        }
+    }
+    public void defeatVillain(Player player){
+        defeatVillain(player.player , player.hp);
+    }
+    public void defeatVillain(char x , String player , int hp){
+        int y = (int)x - (int)'0';
+        this.hp = this.hp * y;
+        System.out.printf("HP with %cx boost: %d\n", x , this.hp);
+        defeatVillain(player, hp);
+    }
+}
+
+//ans to the ques no 2
+
+public class Student {
+    public int id;
+    public double cg;
+    public String[] course=new String[4];
+    public int count;
+
+    public Student(int id){
+        this.id = id;
+        System.out.printf("A Student with ID %d has been created.\n", this.id);
+    }
+    public Student(int id , double cg){
+        this.id= id;
+        this.cg= cg;
+        System.out.printf("A student with ID %d and cgpa %.1f has been created.\n", this.id , this.cg);
+    }
+    public void addCourse(String tittle){
+        if(cg==0){
+            System.out.printf("Failed to add CSE110\nSet CG first\n");
+        }
+        else{
+            if(cg<3){
+                if(count<3){
+                    this.course[count++]=tittle;
+                }
+                else {
+                    System.out.printf("Failed to add %s\nCGPA is low, can't add more than 3 courses.\n",tittle);
+                }
+            }
+            else{
+                if(count<4){
+                    this.course[count++]=tittle;
+                }
+                else{
+                    System.out.printf("Failed to add %s\nMaximum 4 courses allowed\n", tittle);
+                }
+            }
+        }
+    }
+    public void addCourse(String[] courseArr){
+        for(int i =0 ; i<courseArr.length ;i++){
+            addCourse(courseArr[i]);
+        }
+    }
+    public void storeCG(double cg){
+        this.cg= cg;
+    }
+    public void removeAllCourse(){
+        course = new String[4];
+        count=0;
+    }
+    public void storeID(int id){
+        this.id = id;
+    }
+    public void showAdvisee(){
+        System.out.printf("Student ID: %d, CGPA: %.1f\n",this.id, this.cg);
+        if(count>0){
+            System.out.printf("Added courses are:\n");
+            for(int i =0 ; i<count ; i++) {
+                System.out.printf(this.course[i] + " ");
+            }
+            System.out.println();
+        }
+        else {
+            System.out.printf("No courses added\n");
+        }
+    }
+
+}
+
+//ans to the ques no 3
+
+//student class
+public class Student {
+    public String email="null";
+    public String password="null";
+    public String[] course=new String[3];
+    public String status="null";;
+    public String name;
+    public String dept;
+    public int id;
+    public int count;
+    public Student(String name , int id , String dept){
+        this.name= name;
+        this.id= id;
+        this.dept = dept;
+        System.out.printf("Student object is created\n");
+    }
+}
+
+// connect class
+
+public class Connect {
+    public int total;
+    public Student[] advisee = new Student[5];
+    public Connect(){
+        System.out.printf("Connect is ready to use!\n");
+    }
+    public void login(Student std){
+        if(std.password.equals("null")){
+            System.out.printf("Email and password need to be set.\n");
+        }
+        else {
+            if(total<5) {
+                advisee[total++] = std;
+                std.status = "active";
+                System.out.printf("Login successful\n");
+            }
+            else {
+                System.out.printf("Can't take more then 5 advisee\n");
+            }
+        }
+    }
+    public void advising(Student nm){
+        if(nm.status.equals("active")){
+            System.out.printf("You haven't selected any courses.\n");
+        }
+        else {
+            System.out.printf("Please login to advise courses!\n");
+        }
+    }
+    public void advising (Student nm , String s1, String s2, String s3, String s4){
+        System.out.printf("You need special approval to take more than 3 courses.\n");
+    }
+    public void advising (Student nm , String s1, String s2, String s3){
+        nm.course[nm.count++] =s1;
+        nm.course[nm.count++] =s2;
+        nm.course[nm.count++] =s3;
+        System.out.printf("Advising successful!\n");
+    }
+    public void allAdviseeInfo(){
+        System.out.printf("Total Advisee: %d\n",total);
+        for (int i =0 ; i<total ; i++) {
+            System.out.printf("Name: %s ID: %d\n", advisee[i].name, advisee[i].id);
+            System.out.printf("Department: %s\n", advisee[i].dept);
+            System.out.printf("Advised Course:\n");
+            for (int j = 0; j <advisee[i].count ; j++) {
+                System.out.printf( advisee[i].course[j] + " ");
+            }
+            System.out.printf("\n==============\n");
+        }
+    }
+}
+
+//ans to the ques no 4
+
+
+public class TravelPrep {
+    public String t_name="unknown package";
+    public String placeTemp;
+    public int costTemp;
+    public String[] place = new String[3];
+    public int[] cost = new int[3];
+    public int budget=1250;
+    public int visit;
+    public int total;
+
+    public TravelPrep(){
+        System.out.printf("%s would cost at most %d yen\n",this.t_name,this.budget);
+    }
+    public TravelPrep(String name, int bud){
+        this.t_name = name;
+        this.budget= bud;
+        System.out.printf("%s would cost at most %d yen\n",this.t_name,this.budget);
+    }
+    public TravelPrep(String s1, String s2){
+        placeTemp= s1 +" " + s2;
+        costTemp= 300;
+        System.out.printf("%s %s costs %d yen\n",s1,s2,costTemp);
+    }
+    public TravelPrep(String s1, String s2,  int bud){
+        placeTemp = s2 +" " + s1;
+        costTemp = bud;
+        System.out.printf("%s %s costs %d yen\n",s2,s1,bud);
+    }
+    public void add_to_itinerary(TravelPrep temp){
+       if((visit<3) && (total+ temp.costTemp)<=budget) {
+           place[visit] = temp.placeTemp;
+           cost[visit++] = temp.costTemp;
+           total += temp.costTemp;
+       }
+       else{
+           System.out.printf("Budget going overboard\n");
+       }
+    }
+    public void add_to_itinerary(TravelPrep temp1 , TravelPrep temp2){
+        add_to_itinerary(temp1);
+        add_to_itinerary(temp2);
+    }
+    public void show_itinerary(){
+        System.out.printf("Itinerary for %s\n", this.t_name);
+        for(int i =0 ; i<visit ; i++){
+            System.out.printf("%d. %s - %d yen\n",(i+1) , place[i] , cost[i]);
+        }
+        System.out.printf("Total cost of %d destinations: %d yen\n",this.visit,this.total);
+    }
+    public String updateCost(int bud){
+        costTemp += bud;
+        String a = "cost of " + placeTemp+ "updated to "+ costTemp;
+        return a;
+    }
+}
+
+

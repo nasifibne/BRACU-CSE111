@@ -1,0 +1,228 @@
+//ans to the ques no 1
+
+public class SmartSecurityCamera extends SmartDevice {
+
+    public int storage;
+    public int cap;
+    public boolean night = false;
+
+    public SmartSecurityCamera(String name, int level , int storage){
+        super(name, level);
+        this.storage =storage;
+        this.cap =storage;
+    }
+
+    public void powerOn(){
+        if(this.storage>0){
+            super.powerOn();
+        }
+        else {
+            System.out.println("Error: "+ super.deviceName+ " storage full. Recording disabled.");
+        }
+    }
+
+    public void record(boolean temp){
+        if (temp){
+            this.night = true;
+            System.out.println("[IR SENSORS ACTIVE]");
+        }
+        this.storage--;
+        System.out.println("Recording standard footage.");
+    }
+
+    public void record(){
+        record(false);
+    }
+
+    public void powerOff(){
+        if(this.night){
+            System.out.println("Turning off Night Vision.");
+        }
+        super.powerOff();
+    }
+
+    public void formatCard(String code){
+
+        if (code.equals("ADMIN123")){
+            if(super.isActive) {
+                System.out.println("REQUEST: Format SD Card initiated.\nAuth Success. Wiping data.\nSUCCESS: Storage restored to " + this.cap+ " GB");
+            }
+            else {
+                System.out.println("REQUEST: Format SD Card initiated.\nERROR: Device must be ON to format.");
+            }
+        }
+        else {
+            System.out.println("REQUEST: Format SD Card initiated.\nACCESS DENIED: Incorrect PIN.");
+        }
+    }
+
+}
+
+//ans to the ques no 2
+
+class UpsideDown extends Hawkins{
+
+    public static int totalBridges;
+    private Hawkins brd1;
+    private Hawkins brd2;
+
+    public UpsideDown(String name){
+        super(name);
+    }
+
+    public void connect( Hawkins h){
+        if (brd1 == null) {
+            brd1 = h;
+            totalBridges++;
+        }
+        else if (brd2 == null) {
+            brd2 = h;
+            totalBridges++;
+        }
+        else {
+            System.out.println("No further bridges with " + this.name);
+        }
+    }
+
+    public Hawkins getBridge1() {
+        return brd1;
+    }
+
+    public Hawkins getBridge2() {
+        return brd2;
+    }
+
+    public void disconnect(int num){
+        if(num>2){
+            System.out.println("Invalid bridge number!");
+        }
+        else {
+            if (num == 1 && brd1 != null) {
+                brd1 = null;
+                totalBridges--;
+            } else if (num == 2 && brd2 != null) {
+                brd2 = null;
+                totalBridges--;
+            } else {
+                System.out.println("No further bridges with " + this.name + "\nInvalid bridge number!");
+            }
+        }
+    }
+
+    public void activate(Hawkins obj ){
+        System.out.println("Activating the door of " + obj.name);
+    }
+
+    public void details(){
+        System.out.println(super.name + "  Details:");
+        if (brd1 != null) {
+            System.out.println("Bridge 1: " + brd1.name);
+        }
+        if (brd2 != null) {
+            System.out.println("Bridge 2: " + brd2.name);
+        }
+    }
+}
+
+//ans to the ques no 3
+
+//bike class
+
+public class Bike extends Vehicle{
+
+    public String model;
+    public int doors;
+    public boolean Sidecar;
+
+    public Bike(String brand , String model , int year , int wheel , boolean sidecar){
+        super(brand,year);
+        super.setWheels(wheel);
+        this.model = model;
+        this.Sidecar =sidecar;
+    }
+    public String toString(){
+        return "Bike " + super.toString() + ",Model: " + this.model+", Doors: "+ this.doors+", SideCar: "+ this.Sidecar;
+    }
+    public void doAWheelie(){
+        if(!this.Sidecar){
+            System.out.println(this.getBrand() + ":" + this.model + " is doing Wheelie!!");
+        }
+        else {
+            System.out.println("Wheelie Failed. " + this.getBrand() + ":" + this.model + " has SideCar");
+        }
+    }
+
+}
+
+//car class
+
+public class Car extends Vehicle{
+
+    public String model;
+    public int doors;
+    public boolean ai;
+
+    public Car(String brand , String model , int year , int door , int wheel , boolean ai){
+        super(brand,year);
+        super.setWheels(wheel);
+        this.model = model;
+        this.doors = door;
+        this.ai=ai;
+    }
+    public String toString(){
+        return "Car " + super.toString() + ",Model: " + this.model+", Doors: "+ this.doors+", AI: "+ this.ai;
+    }
+    public void startAutoPilot(){
+        if(this.ai){
+            System.out.println(this.getBrand() + " " + this.model + " AutoPilot Started");
+        }
+        else {
+            System.out.println(this.getBrand() + " " + this.model + " has NO AutoPilot");
+        }
+    }
+}
+
+
+//garage class 
+
+public class Garage {
+    public Bike[] bikes;
+    public Car[] cars;
+    public int Bcount;
+    public int Ccount;
+
+    public Garage(int ccap, int bcap){
+        bikes = new Bike[bcap];
+        cars = new Car[ccap];
+        System.out.println("Welcome to the Garage!");
+        System.out.println("Car Capacity: " + ccap);
+        System.out.println("Bike Capacity: " + bcap);
+    }
+
+    public void addVehicle(Vehicle temp){
+        if( temp instanceof Car){
+            Car c = (Car) temp;
+            if(Ccount<cars.length){
+                cars[Ccount++] = c;
+                System.out.println("A " + c.getBrand() + " CAR has been added to the Garage");
+            }
+            else {
+                System.out.println("Can't add more Cars! Capacity: " + cars.length);
+            }
+        }
+        else if (temp instanceof  Bike) {
+            Bike b = (Bike) temp;
+            if(Bcount<bikes.length){
+                bikes[Bcount++] = b;
+                System.out.println("A " + b.getBrand() + " CAR has been added to the Garage");
+            }
+            else {
+                System.out.println("Can't add more Bikes! Capacity: " + bikes.length);
+            }
+        }
+    }
+}
+
+
+
+

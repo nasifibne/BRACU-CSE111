@@ -1,0 +1,166 @@
+//ans to the ques no 1
+
+//animal class
+
+public class Animal{
+    public int legs = 4;
+    public String sound = "Not defined";
+
+    public void details(){
+        System.out.println("Legs: "+legs);
+        System.out.println("Sound: "+sound);
+    }
+}
+
+
+//cow class
+
+public class Cow extends Animal {
+    public String name;
+
+    public Cow(){
+        System.out.println("The cow says hello!");
+    }
+
+    public String getName(){
+        return this.name;
+    }
+    
+    public void updateSound(String sound){
+        this.sound =sound;
+    }
+    
+    public String  getSound(){
+        return this.sound;
+    }
+    
+}
+
+//ans to the ques no 2
+
+// account class
+
+public class Account{
+    public double balance = 0.0;
+
+    public Account(double balance){
+        this.balance = balance;
+    }
+    public double showBalance(){
+        return balance;
+    }
+}
+
+
+// checkingAccount class
+
+public class CheckingAccount extends Account {
+    public static int count;
+
+    public CheckingAccount(){
+        super(0.0);
+        count++;
+    }
+    public CheckingAccount(double bal){
+        super(bal);
+        count++;
+    }
+
+}
+
+//ans to the ques no 3
+
+//cd class
+
+public class CD extends Product {
+
+    public String band;
+    public int duration;
+    public String genre;
+
+    public CD(int id, String tittle, int price, String band, int duration , String genre){
+        super(id, tittle,price);
+        this.band= band;
+        this.duration = duration;
+        this.genre = genre;
+    }
+
+    public String printDetail(){
+        return getIdTitlePrice()+"\nBand: " + this.band + " Duration: " + this.duration + " Genre: " + this.genre;
+    }
+}
+
+
+// book class
+
+public class Book extends Product {
+    public String ISBN;
+    public String publisher;
+
+    public Book(int id, String tittle, int price, String isbn, String publisher){
+        super(id, tittle,price);
+        this.ISBN= isbn;
+        this.publisher= publisher;
+    }
+    public String printDetail(){
+        return getIdTitlePrice()+"\nISBN: " + this.ISBN + " Publisher: " + this.publisher;
+    }
+}
+
+//ans to the ques no 4
+
+//complexNumber class
+public class ComplexNumber extends RealNumber{
+    public double imaginaryValue;
+
+    public ComplexNumber(){
+        super(1.0);
+        imaginaryValue= 1.0;
+    }
+
+    public ComplexNumber(Double real , double ime){
+        super(real);
+        this.imaginaryValue= ime;
+    }
+
+    public String details(){
+        return getReal()+ "\nImaginaryPart: " + this.imaginaryValue;
+    }
+}
+
+//ans to the qus no 5
+
+//CSEStudent class
+
+public class CSEStudent extends Student {
+
+    public static int total;
+    public static String[] course = new String[]{"CSE110", "CSE111" ,"CSE220", "CSE221"};
+
+    public CSEStudent(String name, int id){
+        super(name,id);
+        total++;
+    }
+
+    public static void details(){
+        System.out.println("Total CSE Students: "+ total );
+        System.out.print("Available Lab Based Courses: ");
+        for (int i = 0; i < course.length; i++) {
+            System.out.print(course[i]+ " ");
+        }
+        System.out.println();
+    }
+    public void addLabBasedCourse(String crs){
+        boolean flag = false;
+        for (int i = 0; i < this.course.length; i++) {
+            if(this.course[i].equals(crs)){
+                this.courses+= crs + " ";
+                flag = true;
+            }
+        }
+        if(!flag){
+            System.out.println("It is not a lab based course!");
+        }
+    }
+
+}

@@ -1,0 +1,172 @@
+// ans to the ques no 1
+
+public class Toy {
+    public String name;
+    public int price;
+
+    public Toy(String name, int price){
+        this.name= name;
+        this.price= price;
+        System.out.println("A new toy has been made!");
+    }
+    public void updatePrice(int price){
+        this.price= price;
+    }
+    public void showPrice(){
+        System.out.println("price: " + this.price + " Taka");
+    }
+    public void updateName(String name){
+        System.out.println("Changing old name: " + this.name);
+        this.name=name;
+        System.out.println("new name: " + this.name);
+    }
+}
+
+
+//ans to the ques no 2
+
+public class Cart {
+
+    public int cartNum;
+    public String[] itemName = new String[3];
+    public double[] ItemPrice = new double[3];
+    public int count;
+    public double discount;
+    public double total;
+
+    public void create_cart(int i){
+        cartNum=i;
+    }
+    public void addItem(String item , double price){
+       if(count<itemName.length) {
+           itemName[count] = item;
+           ItemPrice[count] = price;
+           count++;
+           total+=price;
+           System.out.printf("%s added to cart %d\n", item, this.cartNum);
+           System.out.printf("You have %d item(s) in your cart now.\n",count);
+       }
+       else{
+           System.out.println("You already have 3 items on your cart");
+       }
+    }
+    public void addItem(double price , String item){
+        addItem(item , price);
+    }
+    public void cartDetails(){
+        System.out.printf("Your cart(c%d)\n", cartNum);
+        for (int i =0; i<count ; i++){
+            System.out.println(itemName[i] +" - "+ ItemPrice[i]);
+        }
+        System.out.printf("Discount Applied: %.1f %%\n", discount);
+        System.out.printf("Total price: %f\n" , total);
+    }
+    public void giveDiscount(int dis){
+        discount = dis;
+        total = total - (total*dis/100);
+    }
+
+}
+
+
+// ans to the ques no 3
+
+public class Reader {
+    public String name = "New User";
+    public int cap = 0;
+    public int count = 0;
+    public String [] bookArr;
+
+    public Reader(String name){
+        this.name = name;
+        this.cap = 2;
+        bookArr = new String[cap];
+        System.out.printf("A new reade is created\n");
+    }
+    public Reader(String name , int cap){
+        this.name= name ;
+        this.cap= cap;
+        bookArr = new String[cap];
+        System.out.printf("A new reade is created\n");
+    }
+    public void readerInfo(){
+        System.out.printf("Name: %s\n", this.name);
+        System.out.printf("Capacity: %d\n", this.cap);
+        System.out.printf("Books\n");
+        if(count>0) {
+            for (int i = 0; i < count; i++) {
+                System.out.printf("Books %d : %s\n", (i+1), bookArr[i]);
+            }
+        }
+        else{
+            System.out.printf("No books added yet\n");
+        }
+    }
+    public void addBook(String book){
+        if(count<bookArr.length) {
+            this.bookArr[count++] = book;
+        }
+        else{
+            System.out.printf("No more capacity\n");
+        }
+
+    }
+    public void updateCapacity(int cap){
+        String[] temp = new String[cap];
+        for (int i =0 ; i<count ; i++){
+            temp[i] = bookArr[i];
+        }
+        this.cap = cap;
+        bookArr = new String[cap];
+        for (int i =0 ; i<count ; i++){
+            this.bookArr[i] = temp[i];
+        }
+        System.out.printf("Capacity has changed to %d\n", this.cap);
+    }
+}
+
+// ans to the ques no 4
+
+public class MoneyTracker {
+    public String name;
+    public double bal;
+    public double lastAdd;
+    public double lastSpent;
+
+    public MoneyTracker(){
+        System.out.printf("A new money tracker has been launched.\n");
+    }
+    public String info(){
+        String a = "Name: " + this.name+ "\nCurrent Balance: " + bal;
+        return a;
+    }
+    public void createTracker(String name){
+        this.name = name;
+        bal = 1.0;
+    }
+    public void income(int income){
+        this.bal+=income;
+        this.lastAdd= income;
+        System.out.printf("Balance Updated.\n");
+    }
+    public void expense(int expense){
+        if(bal==expense){
+            lastSpent = expense;
+            System.out.printf("You're broke!\n");
+        }
+        else if(this.bal<expense){
+            System.out.printf("Not enough Balance\n");
+        }
+        else if (this.bal>expense){
+            bal -= expense;
+            this.lastSpent = expense;
+            System.out.printf("Balance Updated.\n");
+        }
+    }
+    public void showHistory(){
+        System.out.printf("Last Added: %.1f\nLast spent: %.1f\n",this.lastAdd , this.lastSpent);
+    }
+
+}
+
+

@@ -1,0 +1,14 @@
+import java.util.Scanner;
+public class task7 {
+    public static void main (String [] args){
+        Scanner sc= new Scanner (System.in);
+        int x = sc.nextInt();
+        int digit=0;
+        while (x>0){
+            x /=10;
+            digit++;
+        }
+        System.out.println(digit);
+
+    }
+}
